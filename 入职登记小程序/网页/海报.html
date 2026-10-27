@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no,email=no,address=no">
+<meta name="robots" content="noindex">
+<title>扫码填写入职登记 · 可打印海报</title>
+<style>
+  :root {
+    --pri: #2B6CF6;
+    --ink: #16202E;
+    --ink2: #48536B;
+    --ink3: #8B95A8;
+    --line: #E5E9F0;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: #EEF1F6;
+    color: var(--ink);
+    font: 14px/1.6 -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+      "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- 顶部工具条（打印时隐藏） ---------- */
+  .bar {
+    position: sticky; top: 0; z-index: 5;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    padding: 12px 18px;
+    background: rgba(255,255,255,.94);
+    border-bottom: 1px solid var(--line);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .bar b { font-size: 14px; margin-right: auto; }
+  .bar button {
+    height: 38px; padding: 0 16px; border-radius: 10px;
+    border: 1px solid #DDE3ED; background: #fff; color: var(--ink2);
+    font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  .bar button.primary {
+    background: var(--pri); border-color: var(--pri); color: #fff;
+  }
+  .bar button:active { transform: translateY(1px); }
+
+  /* ---------- A4 纸 ---------- */
+  .paper {
+    width: 210mm; min-height: 297mm;
+    margin: 18px auto 40px;
+    padding: 22mm 18mm;
+    background: #fff;
+    box-shadow: 0 10px 40px -18px rgba(12, 24, 48, .35);
+    display: flex; flex-direction: column;
+  }
+
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .logo {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: linear-gradient(135deg, #3D7BFF, #1B58DA);
+    color: #fff; font-weight: 700; font-size: 17px;
+    display: grid; place-items: center;
+  }
+  .brand-txt b { display: block; font-size: 15px; letter-spacing: .2px; }
+  .brand-txt span { display: block; font-size: 11.5px; color: var(--ink3); }
+
+  .rule { height: 1px; background: var(--line); margin: 18px 0 0; }
+
+  .hero { text-align: center; margin-top: 26mm; }
+  .kicker {
+    display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 2px;
+    color: var(--pri); background: #EDF3FF; border-radius: 999px;
+    padding: 5px 14px;
+  }
+  h1 {
+    font-size: 34px; line-height: 1.28; letter-spacing: -.6px;
+    margin: 16px 0 8px;
+  }
+  .sub { font-size: 13.5px; color: var(--ink2); margin: 0; }
+
+  .qr-card {
+    margin: 26px auto 0; padding: 14px;
+    width: 96mm;
+    border: 1px solid var(--line); border-radius: 18px;
+    display: grid; place-items: center;
+  }
+  .qr-card svg { width: 100%; height: auto; display: block; }
+  .qr-tip {
+    margin: 12px 0 0; text-align: center;
+    font-size: 12.5px; color: var(--ink3);
+  }
+  .link {
+    margin: 6px 0 0; text-align: center;
+    font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 10.5px; color: var(--ink3); word-break: break-all;
+  }
+
+  .steps {
+    margin: 26px 0 0; padding: 0; list-style: none;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  }
+  .steps li {
+    background: #F8FAFD; border: 1px solid var(--line); border-radius: 12px;
+    padding: 13px 13px 14px;
+  }
+  .steps b { display: block; font-size: 12.5px; margin-bottom: 4px; }
+  .steps span { display: block; font-size: 11.5px; color: var(--ink3); line-height: 1.55; }
+  .steps i {
+    display: inline-grid; place-items: center;
+    width: 20px; height: 20px; border-radius: 6px;
+    background: var(--pri); color: #fff;
+    font-style: normal; font-size: 11px; font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .foot {
+    margin-top: auto; padding-top: 18px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; gap: 16px;
+    font-size: 11px; color: var(--ink3); line-height: 1.7;
+  }
+  .foot b { color: var(--ink2); }
+
+  /* ---------- 手机上看：不缩成一张小纸 ---------- */
+  @media screen and (max-width: 820px) {
+    .paper {
+      width: auto; min-height: 0; margin: 12px;
+      padding: 24px 18px 28px; border-radius: 16px;
+    }
+    .hero { margin-top: 18px; }
+    h1 { font-size: 26px; }
+    .qr-card { width: min(78vw, 300px); margin-top: 20px; }
+    .steps { grid-template-columns: 1fr; gap: 8px; margin-top: 20px; }
+    .foot { flex-direction: column; gap: 6px; margin-top: 22px; }
+  }
+
+  /* ---------- 打印 ---------- */
+  @page { size: A4; margin: 0; }
+  @media print {
+    body { background: #fff; }
+    .bar { display: none !important; }
+    .paper {
+      width: 210mm; min-height: 297mm; margin: 0; padding: 20mm 18mm;
+      box-shadow: none; border-radius: 0;
+    }
+    .qr-card { border-color: #D9E0EC; }
+    .steps li { background: #fff; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <b>员工填写入口 · 海报</b>
+  <button id="btnQr">存二维码图片</button>
+  <button id="btnPrint" class="primary">打印 / 存为 PDF</button>
+</div>
+
+<div class="paper">
+  <div class="brand">
+    <div class="logo">博</div>
+    <div class="brand-txt">
+      <b>博迈医疗</b>
+      <span>员工入职信息登记</span>
+    </div>
+  </div>
+  <div class="rule"></div>
+
+  <div class="hero">
+    <span class="kicker">入 职 登 记</span>
+    <h1>扫码填写<br>你的入职资料</h1>
+    <p class="sub">在家里就能填，不用到公司，也不用装 App。大约 10 分钟填完。</p>
+
+    <div class="qr-card" id="qrBox"></div>
+    <p class="qr-tip">微信扫一扫，或长按识别二维码</p>
+    <p class="link" id="urlText"></p>
+  </div>
+
+  <ol class="steps">
+    <li>
+      <i>1</i>
+      <b>扫码打开</b>
+      <span>用手机扫上面的码，直接进填写页面。</span>
+    </li>
+    <li>
+      <i>2</i>
+      <b>按提示填</b>
+      <span>个人信息、教育经历、紧急联系人，分 6 步填完。</span>
+    </li>
+    <li>
+      <i>3</i>
+      <b>拍身份证</b>
+      <span>现场拍正反面，号码会自动识别，可以自己改。</span>
+    </li>
+  </ol>
+
+  <div class="foot">
+    <div>
+      <b>填完不用来公司</b><br>
+      HR 会看到你的资料，之后再联系你确认入职时间。
+    </div>
+    <div style="text-align:right">
+      <b>信息仅用于入职建档</b><br>
+      身份证照片只给 HR 归档使用，不作他用。
+    </div>
+  </div>
+</div>
+
+<script src="qr-lite.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  function param(name) {
+    var m = new RegExp('[?&]' + name + '=([^&]*)').exec(location.search);
+    return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+  }
+
+  // ?u= 优先；没带就退回当前站点根目录（这样单独打开也能用）
+  var url = param('u') || (location.origin + location.pathname.replace(/海报\.html$/, ''));
+
+  var box = document.getElementById('qrBox');
+  var qr = null;
+  try {
+    qr = window.QrLite.encode(url);
+    box.innerHTML = window.QrLite.toSvg(qr, { scale: 10, quiet: 2, dark: '#000000', light: '#ffffff' });
+  } catch (e) {
+    box.innerHTML = '<p style="font-size:12px;color:#E5484D">二维码生成失败：' + e.message + '</p>';
+  }
+
+  document.getElementById('urlText').textContent = url;
+
+  // 存成 PNG：公众号文章、招聘平台的头图都用得上
+  document.getElementById('btnQr').addEventListener('click', function () {
+    if (!qr) return;
+    var c = document.createElement('canvas');
+    window.QrLite.toCanvas(qr, c, { pixelSize: 900, quiet: 4 });
+    var a = document.createElement('a');
+    a.href = c.toDataURL('image/png');
+    a.download = '入职登记_二维码.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  });
+
+  document.getElementById('btnPrint').addEventListener('click', function () {
+    window.print();
+  });
+})();
+</script>
+</body>
+</html>

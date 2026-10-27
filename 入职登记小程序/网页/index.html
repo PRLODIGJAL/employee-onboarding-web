@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="format-detection" content="telephone=no,email=no,address=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>员工信息登记</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <button class="brand" id="brandHome" type="button" title="回到首页" aria-label="回到首页">
+    <div class="logo">登</div>
+    <b>员工信息登记</b>
+  </button>
+  <nav class="tabs" id="topTabs">
+    <button class="tab is-on" data-view="form">填写登记</button>
+    <button class="tab" data-view="hr">HR 后台</button>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <!-- 首页：先选身份，再进各自的界面 -->
+  <div id="viewHome"></div>
+
+  <!-- 填写视图 -->
+  <div id="viewForm" hidden>
+    <section class="screen">
+      <div class="screen-top" id="screenTop"></div>
+      <div class="screen-side" id="side"></div>
+      <div class="screen-body" id="formBody"></div>
+      <div class="screen-foot" id="screenFoot"></div>
+    </section>
+  </div>
+
+  <!-- HR 后台 -->
+  <div id="viewHr" hidden></div>
+
+  <!-- HR 登录 -->
+  <div id="viewLogin" hidden></div>
+
+  <!-- 导出结果 -->
+  <div id="viewResult" hidden></div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<!-- 页面内弹层：二维码、填写口令（不用系统弹窗） -->
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-mask" data-close></div>
+  <div class="sheet-box" id="sheetBox"></div>
+</div>
+
+<script src="regions.js"></script>
+<script src="roster-template-b64.js"></script>
+<script src="form-template.js"></script>
+<script src="zip-lite.js"></script>
+<script src="xlsx-lite.js"></script>
+<script src="docx-lite.js"></script>
+<script src="template-docx.js"></script>
+<script src="ocr-lite.js"></script>
+<script src="qr-lite.js"></script>
+<script src="api.js"></script>
+<script src="bundle.js"></script>
+<script src="pack.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
