@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "员工信息登记",
+  "usingComponents": {
+    "form-item": "/components/form-item/form-item",
+    "table-block": "/components/table-block/table-block"
+  }
+}

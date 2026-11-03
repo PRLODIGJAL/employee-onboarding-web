@@ -1,0 +1,10 @@
+{
+  "name": "exportExcel",
+  "version": "1.0.0",
+  "description": "入职登记数据导出 Excel",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3",
+    "exceljs": "^4.4.0"
+  }
+}

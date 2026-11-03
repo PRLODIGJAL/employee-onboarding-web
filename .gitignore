@@ -1,8 +1,6 @@
-node_modules/
-.venv/
-__pycache__/
 .DS_Store
+__pycache__/
+*.pyc
+.venv/
+node_modules/
 *.log
-data/
-logs/
-*.zip

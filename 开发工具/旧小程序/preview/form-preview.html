@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>入职登记表 · 交互预览</title>
+<style>
+  :root {
+    --primary: #2563EB;
+    --danger: #E54545;
+    --text: #1F2329;
+    --text-2: #6B7280;
+    --text-3: #8A919F;
+    --line: #F2F3F5;
+    --bg: #F5F6F8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+    background: #EEF0F3;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 48px;
+    padding: 40px 32px 64px;
+  }
+
+  /* 左侧说明 */
+  .side { width: 320px; padding-top: 12px; }
+  .side h1 { font-size: 21px; font-weight: 600; letter-spacing: .5px; }
+  .side .lead { margin-top: 12px; font-size: 13px; line-height: 1.85; color: var(--text-2); }
+  .side ul { margin: 22px 0 0 0; list-style: none; }
+  .side li { position: relative; padding-left: 16px; margin-bottom: 12px; font-size: 13px; line-height: 1.7; color: var(--text-2); }
+  .side li::before { content: ""; position: absolute; left: 0; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: var(--primary); }
+  .side strong { color: var(--text); font-weight: 600; }
+  .side .demo-btn {
+    margin-top: 26px; width: 100%; height: 42px; border: 1px solid var(--primary);
+    background: #fff; color: var(--primary); border-radius: 9px; font-size: 13.5px;
+    font-weight: 500; cursor: pointer; transition: background .15s;
+  }
+  .side .demo-btn:hover { background: #F3F7FF; }
+  .side .hint { margin-top: 10px; font-size: 11.5px; line-height: 1.7; color: #A3A9B3; }
+
+  /* 手机壳 */
+  .phone {
+    width: 375px; height: 760px; background: #fff; border-radius: 36px;
+    box-shadow: 0 1px 2px rgba(16,24,40,.06), 0 18px 46px rgba(16,24,40,.14);
+    border: 1px solid #E3E6EA; overflow: hidden; position: relative; flex-shrink: 0;
+  }
+  .statusbar { height: 34px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #9AA1AC; }
+  .navbar { height: 44px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 600; border-bottom: 1px solid #F4F5F7; }
+
+  .screen { height: calc(100% - 34px - 44px); overflow-y: auto; background: var(--bg); padding-bottom: 110px; }
+  .screen::-webkit-scrollbar { width: 0; }
+
+  /* 顶部进度 */
+  .hero { background: #fff; padding: 20px 20px 18px; }
+  .hero-title { font-size: 20px; font-weight: 600; }
+  .hero-sub { margin-top: 6px; font-size: 12px; color: var(--text-3); }
+  .bar { margin-top: 16px; height: 4px; background: #EEF0F3; border-radius: 4px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--primary); border-radius: 4px; transition: width .25s; }
+  .bar-text { margin-top: 7px; font-size: 11px; color: var(--text-3); }
+
+  /* 自动填充提示条 */
+  .autohint {
+    display: none; margin: 12px 16px 0; padding: 11px 14px; background: #EAF1FE;
+    border-radius: 10px; font-size: 12px; line-height: 1.6; color: #1D4ED8; animation: slide .25s ease;
+  }
+  .autohint.on { display: block; }
+  @keyframes slide { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+  /* 分组卡片 */
+  .card { margin: 12px 12px 0; background: #fff; border-radius: 14px; padding: 4px 18px 14px; }
+  .card-hd { padding: 14px 0 10px; border-bottom: 1px solid var(--line); }
+  .card-title { font-size: 14.5px; font-weight: 600; }
+  .card-desc { margin-top: 5px; font-size: 11.5px; line-height: 1.5; color: var(--text-3); }
+
+  /* 字段 */
+  .fi { padding: 13px 0; border-bottom: 1px solid var(--line); }
+  .fi:last-child { border-bottom: none; }
+  .fi-hd { display: flex; align-items: center; gap: 3px; }
+  .lbl { font-size: 13.5px; font-weight: 500; color: var(--text); }
+  .req { color: var(--danger); font-size: 13px; }
+  .badge { margin-left: 6px; padding: 1px 5px; font-size: 9.5px; color: var(--primary); background: #EAF1FE; border-radius: 3px; }
+
+  .inp, .sel {
+    margin-top: 7px; width: 100%; height: 32px; border: none; outline: none;
+    font-size: 15px; font-family: inherit; color: var(--text); background: transparent;
+  }
+  .inp::placeholder { color: #B7BCC4; }
+  .sel { appearance: none; cursor: pointer; color: var(--text); }
+  .sel.empty { color: #B7BCC4; }
+  .inp[readonly] { color: #6B7280; }
+
+  .tip { margin-top: 5px; font-size: 11px; line-height: 1.5; color: var(--text-3); }
+  .err { display: none; margin-top: 6px; font-size: 11.5px; line-height: 1.5; color: var(--danger); }
+  .err::before {
+    content: "!"; display: inline-block; width: 12px; height: 12px; margin-right: 5px;
+    line-height: 12px; text-align: center; font-size: 9px; color: #fff;
+    background: var(--danger); border-radius: 50%;
+  }
+  .fi.bad .err { display: block; }
+  .fi.bad .tip { display: none; }
+  .fi.bad .inp, .fi.bad .sel { color: var(--danger); }
+  .fi.bad { animation: shake .2s; }
+  @keyframes shake { 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
+
+  /* 单选 */
+  .radios { display: flex; gap: 8px; margin-top: 9px; }
+  .radio {
+    padding: 6px 17px; font-size: 13px; color: #4E5969; background: #F5F6F8;
+    border: 1px solid transparent; border-radius: 7px; cursor: pointer; transition: all .15s;
+  }
+  .radio.on { color: var(--primary); background: #EAF1FE; border-color: var(--primary); }
+
+  /* 省市区三连 */
+  .region { display: flex; gap: 6px; margin-top: 7px; }
+  .region select {
+    flex: 1; height: 32px; padding: 0 6px; font-size: 13.5px; font-family: inherit;
+    color: var(--text); border: 1px solid #E9EBEF; border-radius: 7px; background: #fff;
+    appearance: none; cursor: pointer;
+  }
+  .region select.empty { color: #B7BCC4; }
+
+  /* 底部栏 */
+  .submitbar {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 16px 16px;
+    background: rgba(255,255,255,.96); border-top: 1px solid #F2F3F5;
+  }
+  .submit {
+    width: 100%; height: 46px; border: none; border-radius: 10px; background: var(--primary);
+    color: #fff; font-size: 16px; font-weight: 500; font-family: inherit; cursor: pointer;
+  }
+  .submit:active { opacity: .85; }
+
+  /* toast */
+  .toast {
+    position: absolute; left: 50%; bottom: 96px; transform: translateX(-50%);
+    padding: 9px 18px; background: rgba(32,36,42,.9); color: #fff; font-size: 12.5px;
+    border-radius: 20px; opacity: 0; pointer-events: none; transition: opacity .2s; white-space: nowrap;
+  }
+  .toast.on { opacity: 1; }
+
+  @media (max-width: 900px) {
+    body { flex-direction: column; align-items: center; padding: 24px 16px; gap: 28px; }
+    .side { width: 100%; max-width: 375px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="side">
+  <h1>入职登记表 · 交互预览</h1>
+  <p class="lead">
+    这是把小程序表单页做成网页版的<strong>可点击原型</strong>，校验逻辑和真实小程序里跑的是同一套算法。
+    不是最终界面，但交互与提示文案就是按这个来。
+  </p>
+  <ul>
+    <li><strong>身份证号</strong>：少一位、多一位、校验位错、生日不存在，各有各的提示</li>
+    <li><strong>自动带出</strong>：号填对后，生日 / 性别 / 籍贯自动填好</li>
+    <li><strong>冲突检测</strong>：手选的性别与号不符，立刻标红</li>
+    <li><strong>银行卡</strong>：Luhn 校验，抄错一位能发现</li>
+  </ul>
+  <button class="demo-btn" id="demoBtn">填入一组合法的示例数据</button>
+  <p class="hint">点了会自动填满整张表，方便直接看提交后的校验效果。也可以自己乱填试试提示。</p>
+</div>
+
+<div class="phone">
+  <div class="statusbar">9:41</div>
+  <div class="navbar">入职登记</div>
+
+  <div class="screen" id="screen">
+    <div class="hero">
+      <div class="hero-title">入职登记表</div>
+      <div class="hero-sub">请如实填写，带 * 为必填项</div>
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="bar-text" id="barText">必填项已填 0 / 8</div>
+    </div>
+
+    <div class="autohint" id="autohint"></div>
+
+    <div class="card">
+      <div class="card-hd">
+        <div class="card-title">一、基本信息</div>
+        <div class="card-desc">请与身份证保持一致，不要使用曾用名或英文名</div>
+      </div>
+
+      <div class="fi" data-key="name">
+        <div class="fi-hd"><span class="lbl">姓名</span><span class="req">*</span></div>
+        <input class="inp" id="name" placeholder="如：张三" autocomplete="off">
+        <div class="tip">与身份证完全一致，少数民族姓名用间隔号「·」</div>
+        <div class="err"></div>
+      </div>
+
+      <div class="fi" data-key="nation">
+        <div class="fi-hd"><span class="lbl">民族</span><span class="req">*</span></div>
+        <select class="sel empty" id="nation">
+          <option value="">请选择民族</option>
+          <option>汉族</option><option>蒙古族</option><option>回族</option><option>藏族</option>
+          <option>维吾尔族</option><option>苗族</option><option>彝族</option><option>壮族</option>
+          <option>满族</option><option>土家族</option><option>其他</option>
+        </select>
+        <div class="tip">按身份证上的民族填写</div>
+        <div class="err"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd">
+        <div class="card-title">二、证件信息</div>
+        <div class="card-desc">身份证号仅用于办理入职、社保与劳动合同</div>
+      </div>
+
+      <div class="fi" data-key="idcard">
+        <div class="fi-hd"><span class="lbl">身份证号</span><span class="req">*</span></div>
+        <input class="inp" id="idcard" placeholder="18 位，最后一位可能是 X" maxlength="18" autocomplete="off">
+        <div class="tip">填完自动核验位数与校验位，并带出生日、性别、籍贯</div>
+        <div class="err"></div>
+      </div>
+
+      <div class="fi" data-key="birthday">
+        <div class="fi-hd"><span class="lbl">出生日期</span><span class="req">*</span><span class="badge">自动带出</span></div>
+        <input class="inp" id="birthday" placeholder="由身份证号自动带出" readonly>
+        <div class="tip">如与身份证不符，请先检查身份证号</div>
+        <div class="err"></div>
+      </div>
+
+      <div class="fi" data-key="gender">
+        <div class="fi-hd"><span class="lbl">性别</span><span class="req">*</span><span class="badge">自动带出</span></div>
+        <div class="radios" id="genderRadios">
+          <div class="radio" data-val="男">男</div>
+          <div class="radio" data-val="女">女</div>
+        </div>
+        <div class="tip">填完身份证号自动选中，可手动修改</div>
+        <div class="err"></div>
+      </div>
+
+      <div class="fi" data-key="native">
+        <div class="fi-hd"><span class="lbl">籍贯</span></div>
+        <input class="inp" id="native" placeholder="如：浙江省杭州市">
+        <div class="tip">按身份证前 6 位自动带出省份，市 / 县可补充</div>
+        <div class="err"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd">
+        <div class="card-title">三、联系方式</div>
+      </div>
+
+      <div class="fi" data-key="phone">
+        <div class="fi-hd"><span class="lbl">手机号</span><span class="req">*</span></div>
+        <input class="inp" id="phone" placeholder="11 位手机号" maxlength="11" inputmode="numeric" autocomplete="off">
+        <div class="tip">用于接收入职通知，请填本人在用的号码</div>
+        <div class="err"></div>
+      </div>
+
+      <div class="fi" data-key="region">
+        <div class="fi-hd"><span class="lbl">现居住地</span><span class="req">*</span></div>
+        <div class="region">
+          <select id="prov" class="empty"><option value="">省</option></select>
+          <select id="city" class="empty"><option value="">市</option></select>
+          <select id="dist" class="empty"><option value="">区</option></select>
+        </div>
+        <div class="tip">点选即可，不用手打省市，不会出现同一条路两种写法</div>
+        <div class="err"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd">
+        <div class="card-title">四、工资卡</div>
+        <div class="card-desc">卡号填错会导致薪资发放失败</div>
+      </div>
+
+      <div class="fi" data-key="bank">
+        <div class="fi-hd"><span class="lbl">银行卡号</span><span class="req">*</span></div>
+        <input class="inp" id="bank" placeholder="16-19 位数字" maxlength="19" inputmode="numeric" autocomplete="off">
+        <div class="tip">填完自动做 Luhn 校验，抄错一位能立刻发现</div>
+        <div class="err"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="submitbar">
+    <button class="submit" id="submitBtn">提交登记表</button>
+  </div>
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- 校验算法（与小程序的 utils 完全一致） ---------- */
+  var W = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+  var C = ["1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"];
+  var PROV = {
+    11: "北京市", 12: "天津市", 13: "河北省", 14: "山西省", 15: "内蒙古自治区",
+    21: "辽宁省", 22: "吉林省", 23: "黑龙江省", 31: "上海市", 32: "江苏省",
+    33: "浙江省", 34: "安徽省", 35: "福建省", 36: "江西省", 37: "山东省",
+    41: "河南省", 42: "湖北省", 43: "湖南省", 44: "广东省", 45: "广西壮族自治区", 46: "海南省",
+    50: "重庆市", 51: "四川省", 52: "贵州省", 53: "云南省", 54: "西藏自治区",
+    61: "陕西省", 62: "甘肃省", 63: "青海省", 64: "宁夏回族自治区", 65: "新疆维吾尔自治区"
+  };
+
+  function checkId(raw) {
+    var id = String(raw || "").trim().toUpperCase();
+    if (!id) return { ok: false, msg: "请填写身份证号" };
+    if (id.length === 15) return { ok: false, msg: "这是 15 位旧版身份证号，请填写 18 位的新证号码" };
+    if (/[^0-9X]/.test(id)) return { ok: false, msg: "身份证号只能是数字，最后一位可能是 X" };
+    if (id.length !== 18) {
+      var d = 18 - id.length;
+      return { ok: false, msg: d > 0
+        ? "身份证号是 18 位，现在只有 " + id.length + " 位，还差 " + d + " 位"
+        : "身份证号是 18 位，现在填了 " + id.length + " 位，多了 " + (-d) + " 位" };
+    }
+    var y = +id.substr(6, 4), m = +id.substr(10, 2), day = +id.substr(12, 2);
+    var dt = new Date(y, m - 1, day);
+    if (dt.getFullYear() !== y || dt.getMonth() !== m - 1 || dt.getDate() !== day) {
+      return { ok: false, msg: "第 7-14 位的出生日期不存在，请核对是否填反或填错" };
+    }
+    if (y < 1900 || dt > new Date()) return { ok: false, msg: "出生日期超出合理范围，请核对" };
+    var sum = 0;
+    for (var i = 0; i < 17; i++) sum += (+id[i]) * W[i];
+    var expect = C[sum % 11];
+    if (expect !== id[17]) {
+      return { ok: false, msg: "校验位不对，按前 17 位推算最后一位应该是 " + expect + "，请核对" };
+    }
+    var pad = function (n) { return n < 10 ? "0" + n : "" + n; };
+    return {
+      ok: true,
+      data: {
+        id: id,
+        birthday: y + "-" + pad(m) + "-" + pad(day),
+        gender: (+id[16]) % 2 === 1 ? "男" : "女",
+        province: PROV[id.substr(0, 2)] || ""
+      }
+    };
+  }
+
+  function checkPhone(v) {
+    var s = String(v || "").trim();
+    if (!s) return "请填写手机号";
+    if (!/^\d+$/.test(s)) return "手机号只能填数字，不要加空格或横线";
+    if (s.length !== 11) return "手机号是 11 位，现在填了 " + s.length + " 位";
+    if (!/^1[3-9]\d{9}$/.test(s)) return "手机号号段不对，请核对第 2 位（3-9）";
+    return "";
+  }
+
+  function checkBank(v) {
+    var s = String(v || "").replace(/\s/g, "");
+    if (!s) return "请填写银行卡号";
+    if (!/^\d{16,19}$/.test(s)) return "银行卡号一般是 16-19 位数字，请核对";
+    var sum = 0, dbl = false;
+    for (var i = s.length - 1; i >= 0; i--) {
+      var d = +s[i];
+      if (dbl) { d *= 2; if (d > 9) d -= 9; }
+      sum += d; dbl = !dbl;
+    }
+    return sum % 10 === 0 ? "" : "银行卡号校验不通过，请逐位核对（确认无误可联系 HR 人工登记）";
+  }
+
+  function checkName(v) {
+    var s = String(v || "").trim();
+    if (!s) return "此项必填";
+    if (!/^[\u4e00-\u9fa5·]{2,20}$/.test(s)) return "姓名请填 2-20 位中文，少数民族姓名可用间隔号「·」";
+    return "";
+  }
+
+  /* ---------- 省市区数据（示例，正式版用微信原生 region picker） ---------- */
+  var REGION = {
+    "浙江省": { "杭州市": ["西湖区", "滨江区", "余杭区", "萧山区"], "宁波市": ["海曙区", "鄞州区", "北仑区"], "温州市": ["鹿城区", "瓯海区"] },
+    "广东省": { "广州市": ["天河区", "越秀区", "海珠区"], "深圳市": ["南山区", "福田区", "宝安区", "龙岗区"] },
+    "江苏省": { "南京市": ["鼓楼区", "玄武区", "江宁区"], "苏州市": ["姑苏区", "工业园区", "吴中区"] },
+    "北京市": { "北京市": ["朝阳区", "海淀区", "东城区", "西城区"] },
+    "四川省": { "成都市": ["武侯区", "锦江区", "高新区"] }
+  };
+
+  /* ---------- DOM ---------- */
+  var $ = function (id) { return document.getElementById(id); };
+  var fiOf = function (key) { return document.querySelector('.fi[data-key="' + key + '"]'); };
+
+  function setErr(key, msg) {
+    var fi = fiOf(key);
+    if (!fi) return;
+    if (msg) {
+      fi.classList.add("bad");
+      fi.querySelector(".err").textContent = msg;
+    } else {
+      fi.classList.remove("bad");
+    }
+  }
+
+  var state = { values: {}, required: ["name", "nation", "idcard", "birthday", "gender", "phone", "region", "bank"] };
+
+  function refreshProgress() {
+    var filled = 0;
+    state.required.forEach(function (k) {
+      var v = state.values[k];
+      if (v && String(v).trim() !== "") filled++;
+    });
+    $("barFill").style.width = Math.round(filled / state.required.length * 100) + "%";
+    $("barText").textContent = "必填项已填 " + filled + " / " + state.required.length;
+  }
+
+  /* ---------- 身份证联动 ---------- */
+  function onIdChange() {
+    var v = $("idcard").value;
+    state.values.idcard = v;
+    var r = checkId(v);
+
+    if (!r.ok) {
+      if (v.length === 0) setErr("idcard", "");
+      else setErr("idcard", r.msg);
+      refreshProgress();
+      return;
+    }
+
+    setErr("idcard", "");
+
+    var filled = [];
+    if (!$("birthday").value) {
+      $("birthday").value = r.data.birthday;
+      state.values.birthday = r.data.birthday;
+      filled.push("出生日期 " + r.data.birthday);
+    }
+    if (!document.querySelector(".radio.on")) {
+      var el = document.querySelector('.radio[data-val="' + r.data.gender + '"]');
+      if (el) el.classList.add("on");
+      state.values.gender = r.data.gender;
+      filled.push("性别 " + r.data.gender);
+    }
+    if (!$("native").value && r.data.province) {
+      $("native").value = r.data.province;
+      state.values.native = r.data.province;
+      filled.push("籍贯 " + r.data.province);
+    }
+
+    if (filled.length) {
+      var h = $("autohint");
+      h.textContent = "已按身份证号带出：" + filled.join("、") + "，请核对";
+      h.classList.add("on");
+      toast("已自动填充 " + filled.length + " 项");
+    }
+
+    // 冲突检测
+    var picked = document.querySelector(".radio.on");
+    if (picked && picked.dataset.val !== r.data.gender) {
+      setErr("gender", "与身份证号推算的性别「" + r.data.gender + "」不一致，请核对");
+    } else {
+      setErr("gender", "");
+    }
+    if ($("birthday").value && $("birthday").value !== r.data.birthday) {
+      setErr("birthday", "与身份证号中的出生日期「" + r.data.birthday + "」不一致，请核对");
+    } else {
+      setErr("birthday", "");
+    }
+
+    refreshProgress();
+  }
+
+  /* ---------- 省市区 ---------- */
+  function fillSelect(el, list, placeholder) {
+    el.innerHTML = '<option value="">' + placeholder + "</option>";
+    list.forEach(function (v) {
+      var o = document.createElement("option");
+      o.textContent = v;
+      el.appendChild(o);
+    });
+  }
+
+  fillSelect($("prov"), Object.keys(REGION), "省");
+  $("prov").onchange = function () {
+    var p = this.value;
+    this.classList.toggle("empty", !p);
+    fillSelect($("city"), p ? Object.keys(REGION[p]) : [], "市");
+    fillSelect($("dist"), [], "区");
+    $("city").classList.add("empty");
+    $("dist").classList.add("empty");
+    syncRegion();
+  };
+  $("city").onchange = function () {
+    var p = $("prov").value, c = this.value;
+    this.classList.toggle("empty", !c);
+    fillSelect($("dist"), c ? REGION[p][c] : [], "区");
+    $("dist").classList.add("empty");
+    syncRegion();
+  };
+  $("dist").onchange = function () {
+    this.classList.toggle("empty", !this.value);
+    syncRegion();
+  };
+
+  function syncRegion() {
+    var p = $("prov").value, c = $("city").value, d = $("dist").value;
+    var arr = [p, c, d].filter(Boolean);
+    state.values.region = arr.join(" ");
+    if (arr.length === 3) setErr("region", "");
+    refreshProgress();
+  }
+
+  /* ---------- 事件绑定 ---------- */
+  $("name").oninput = function () {
+    state.values.name = this.value;
+    if (this.value.trim()) setErr("name", checkName(this.value));
+    else setErr("name", "");
+    refreshProgress();
+  };
+  $("name").onblur = function () { setErr("name", checkName(this.value)); };
+
+  $("nation").onchange = function () {
+    this.classList.toggle("empty", !this.value);
+    state.values.nation = this.value;
+    if (this.value) setErr("nation", "");
+    refreshProgress();
+  };
+
+  $("idcard").oninput = onIdChange;
+  $("idcard").onblur = function () { if (this.value) setErr("idcard", checkId(this.value).ok ? "" : checkId(this.value).msg); };
+
+  $("genderRadios").onclick = function (e) {
+    var t = e.target.closest(".radio");
+    if (!t) return;
+    Array.prototype.forEach.call(this.children, function (c) { c.classList.remove("on"); });
+    t.classList.add("on");
+    state.values.gender = t.dataset.val;
+    var r = checkId($("idcard").value);
+    if (r.ok && r.data.gender !== t.dataset.val) {
+      setErr("gender", "与身份证号推算的性别「" + r.data.gender + "」不一致，请核对");
+    } else {
+      setErr("gender", "");
+    }
+    refreshProgress();
+  };
+
+  $("phone").oninput = function () {
+    state.values.phone = this.value;
+    if (this.value.length >= 11) setErr("phone", checkPhone(this.value));
+    else setErr("phone", "");
+    refreshProgress();
+  };
+  $("phone").onblur = function () { setErr("phone", checkPhone(this.value)); };
+
+  $("bank").oninput = function () {
+    state.values.bank = this.value;
+    if (this.value.length >= 16) setErr("bank", checkBank(this.value));
+    else setErr("bank", "");
+    refreshProgress();
+  };
+  $("bank").onblur = function () { setErr("bank", checkBank(this.value)); };
+
+  $("native").oninput = function () { state.values.native = this.value; };
+
+  /* ---------- toast ---------- */
+  var toastTimer;
+  function toast(msg) {
+    var t = $("toast");
+    t.textContent = msg;
+    t.classList.add("on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove("on"); }, 1600);
+  }
+
+  /* ---------- 提交 ---------- */
+  $("submitBtn").onclick = function () {
+    var errs = {};
+    errs.name = checkName($("name").value);
+    errs.nation = $("nation").value ? "" : "请选择民族";
+    errs.idcard = checkId($("idcard").value).ok ? "" : checkId($("idcard").value).msg;
+    errs.birthday = $("birthday").value ? "" : "此项必填";
+    errs.gender = document.querySelector(".radio.on") ? "" : "请选择性别";
+    errs.phone = checkPhone($("phone").value);
+    errs.region = state.values.region && state.values.region.split(" ").length === 3 ? "" : "请选择省 / 市 / 区";
+    errs.bank = checkBank($("bank").value);
+
+    var first = "";
+    Object.keys(errs).forEach(function (k) {
+      setErr(k, errs[k] || "");
+      if (errs[k] && !first) first = k;
+    });
+
+    var count = Object.keys(errs).filter(function (k) { return errs[k]; }).length;
+
+    if (first) {
+      var fi = fiOf(first);
+      var sc = $("screen");
+      sc.scrollTo({ top: fi.offsetTop - 90, behavior: "smooth" });
+      toast(count + " 项需要修改");
+      return;
+    }
+    toast("校验通过，真实环境会提交到云数据库并生成登记编号");
+  };
+
+  /* ---------- 一键示例 ---------- */
+  // 按前 17 位推算出合法校验位，保证演示号一定通过
+  function makeId(first17) {
+    var sum = 0;
+    for (var i = 0; i < 17; i++) sum += (+first17[i]) * W[i];
+    return first17 + C[sum % 11];
+  }
+
+  $("demoBtn").onclick = function () {
+    $("name").value = "张明远";
+    state.values.name = "张明远";
+    $("idcard").value = makeId("33010619930812451");
+    state.values.idcard = $("idcard").value;
+    $("birthday").value = "";
+    document.querySelectorAll(".radio").forEach(function (r) { r.classList.remove("on"); });
+    $("native").value = "";
+
+    $("nation").value = "汉族";
+    $("nation").classList.remove("empty");
+    state.values.nation = "汉族";
+
+    $("phone").value = "13800138000";
+    state.values.phone = "13800138000";
+
+    $("prov").value = "浙江省"; $("prov").classList.remove("empty");
+    fillSelect($("city"), Object.keys(REGION["浙江省"]), "市");
+    $("city").value = "杭州市"; $("city").classList.remove("empty");
+    fillSelect($("dist"), REGION["浙江省"]["杭州市"], "区");
+    $("dist").value = "西湖区"; $("dist").classList.remove("empty");
+    syncRegion();
+
+    $("bank").value = "6217000000000000";
+    state.values.bank = $("bank").value;
+
+    ["name", "nation", "phone", "region", "bank"].forEach(function (k) { setErr(k, ""); });
+    onIdChange();
+    $("screen").scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  refreshProgress();
+})();
+</script>
+</body>
+</html>

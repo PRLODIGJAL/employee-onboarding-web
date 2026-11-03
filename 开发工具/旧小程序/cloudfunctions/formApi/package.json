@@ -1,0 +1,9 @@
+{
+  "name": "formApi",
+  "version": "1.0.0",
+  "description": "入职登记表提交与查询接口",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

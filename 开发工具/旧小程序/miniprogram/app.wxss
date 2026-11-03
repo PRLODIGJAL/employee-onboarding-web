@@ -1,0 +1,32 @@
+page {
+  --color-primary: #2563EB;
+  --color-danger: #E54545;
+  --color-text: #1F2329;
+  --color-text-secondary: #8A919F;
+  --color-bg: #F5F6F8;
+  --color-line: #F2F3F5;
+
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+  font-size: 28rpx;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  box-sizing: border-box;
+}
+
+view,
+text,
+input,
+textarea,
+button {
+  box-sizing: border-box;
+}
+
+/* 去掉 button 默认边框 */
+button::after {
+  border: none;
+}
+
+.safe-area-bottom {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}

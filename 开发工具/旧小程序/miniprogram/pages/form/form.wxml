@@ -1,0 +1,78 @@
+<view class="page">
+
+  <!-- 顶部：进度 -->
+  <view class="hero">
+    <view class="hero-top">
+      <text class="hero-step">{{current + 1}}/{{stepCount}}</text>
+      <text class="hero-title">{{currentStep.title}}</text>
+    </view>
+    <view class="hero-progress">
+      <view class="hero-progress-bar" style="width: {{percent}}%"></view>
+    </view>
+    <view class="hero-sub">{{currentStep.desc}}</view>
+  </view>
+
+  <!-- 步骤条 -->
+  <scroll-view class="steps" scroll-x enable-flex scroll-with-animation scroll-into-view="step-{{current}}">
+    <view
+      wx:for="{{steps}}"
+      wx:key="key"
+      id="step-{{index}}"
+      class="step {{index === current ? 'is-on' : ''}} {{index < current ? 'is-done' : ''}}"
+      data-idx="{{index}}"
+      bindtap="onStepTap"
+    >
+      <text class="step-dot">{{index < current ? '✓' : index + 1}}</text>
+      <text class="step-text">{{item.title}}</text>
+    </view>
+  </scroll-view>
+
+  <!-- 智能提示 -->
+  <view wx:if="{{autoHint}}" class="autohint">
+    <text class="autohint-icon">i</text>
+    <text class="autohint-text">{{autoHint}}</text>
+    <text class="autohint-close" bindtap="closeHint">×</text>
+  </view>
+
+  <!-- 字段 -->
+  <view wx:if="{{renderFields.length}}" class="card">
+    <form-item
+      wx:for="{{renderFields}}"
+      wx:for-item="field"
+      wx:key="key"
+      id="f-{{field.key}}"
+      field="{{field}}"
+      value="{{values[field.key]}}"
+      noteValue="{{values[field.key + 'Note']}}"
+      error="{{errors[field.key]}}"
+      bind:change="onFieldChange"
+      bind:blur="onFieldBlur"
+    />
+  </view>
+
+  <!-- 多段经历 -->
+  <view wx:for="{{currentStep.tables}}" wx:for-item="block" wx:key="key" class="card">
+    <table-block
+      block="{{block}}"
+      rows="{{tableRows[block.key]}}"
+      errors="{{tableErrors}}"
+      bind:change="onTableChange"
+    />
+  </view>
+
+  <view class="footer-note">你的信息仅用于办理入职、社保与劳动合同，不会用于其他用途。</view>
+
+  <!-- 底部按钮 -->
+  <view class="nav-bar">
+    <view wx:if="{{current > 0}}" class="btn-ghost" bindtap="onPrev">上一步</view>
+    <view wx:if="{{!isLast}}" class="btn-main" bindtap="onNext">下一步</view>
+    <button
+      wx:else
+      class="btn-main"
+      loading="{{submitting}}"
+      disabled="{{submitting}}"
+      bindtap="onSubmit"
+    >{{submitting ? '提交中' : '提交登记表'}}</button>
+  </view>
+
+</view>

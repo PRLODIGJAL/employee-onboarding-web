@@ -1,0 +1,44 @@
+<view class="page">
+
+  <view wx:if="{{forbidden}}" class="empty">
+    <text class="empty-title">没有查看权限</text>
+    <text class="empty-desc">你的微信号不在管理员名单里。请联系 HR 把你的 openid 加进 admins 集合。</text>
+  </view>
+
+  <block wx:else>
+    <view class="sum">
+      <text class="sum-num">{{total}}</text>
+      <text class="sum-label">条登记记录</text>
+    </view>
+
+    <view class="list">
+      <view wx:for="{{list}}" wx:key="_id" class="item">
+        <view class="item-main">
+          <view class="item-line">
+            <text class="item-name">{{item.realName}}</text>
+            <text class="item-gender">{{item.gender}}</text>
+            <text class="item-status">{{item.status === 'archived' ? '已归档' : '待归档'}}</text>
+          </view>
+          <view class="item-sub">{{item.formNo}} · {{item.phoneMasked}}</view>
+          <view class="item-sub">{{item.idcardMasked}}</view>
+        </view>
+        <view
+          class="item-btn {{exportingId === item._id ? 'is-loading' : ''}}"
+          data-id="{{item._id}}"
+          data-name="{{item.realName}}"
+          bindtap="onExport"
+        >
+          {{exportingId === item._id ? '生成中' : '导出'}}
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{!loading && list.length === 0}}" class="empty">
+      <text class="empty-title">还没有人提交</text>
+      <text class="empty-desc">把小程序码发给新员工，填完就会出现在这里。</text>
+    </view>
+
+    <view wx:if="{{list.length}}" class="load-tip">{{hasMore ? '下拉加载更多' : '没有更多了'}}</view>
+  </block>
+
+</view>

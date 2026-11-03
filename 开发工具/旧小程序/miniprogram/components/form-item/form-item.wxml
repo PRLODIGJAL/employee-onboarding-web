@@ -1,0 +1,166 @@
+<view class="fi {{error ? 'is-error' : ''}} {{disabled ? 'is-disabled' : ''}}">
+  <view class="fi-hd">
+    <text class="fi-label">{{field.label}}</text>
+    <text wx:if="{{field.required}}" class="fi-star">*</text>
+    <text wx:if="{{field.autoFill}}" class="fi-badge">自动带出</text>
+  </view>
+
+  <!-- 单行输入 -->
+  <view wx:if="{{kind === 'text'}}" class="fi-row">
+    <input
+      class="fi-input"
+      type="{{inputType}}"
+      value="{{value}}"
+      maxlength="{{field.maxLength || 60}}"
+      placeholder="{{field.placeholder || '请输入'}}"
+      placeholder-class="fi-ph"
+      disabled="{{disabled}}"
+      bindinput="onInput"
+      bindblur="onBlur"
+    />
+    <text wx:if="{{field.suffix}}" class="fi-suffix">{{field.suffix}}</text>
+  </view>
+
+  <!-- 多行输入 -->
+  <textarea
+    wx:elif="{{kind === 'textarea'}}"
+    class="fi-textarea"
+    value="{{value}}"
+    maxlength="{{field.maxLength || 200}}"
+    placeholder="{{field.placeholder || '请输入'}}"
+    placeholder-class="fi-ph"
+    auto-height
+    disabled="{{disabled}}"
+    bindinput="onInput"
+    bindblur="onBlur"
+  />
+
+  <!-- 下拉 -->
+  <picker
+    wx:elif="{{kind === 'select'}}"
+    mode="selector"
+    range="{{field.options}}"
+    value="{{selectIndex}}"
+    disabled="{{disabled}}"
+    bindchange="onSelect"
+  >
+    <view class="fi-picker">
+      <text class="{{display ? 'fi-picker-text' : 'fi-ph'}}">{{display || field.placeholder || '请选择'}}</text>
+      <text class="fi-arrow">›</text>
+    </view>
+  </picker>
+
+  <!-- 省市区 -->
+  <picker
+    wx:elif="{{kind === 'region'}}"
+    mode="region"
+    value="{{regionValue}}"
+    disabled="{{disabled}}"
+    bindchange="onRegion"
+  >
+    <view class="fi-picker">
+      <text class="{{display ? 'fi-picker-text' : 'fi-ph'}}">{{display || '请选择省 / 市 / 区'}}</text>
+      <text class="fi-arrow">›</text>
+    </view>
+  </picker>
+
+  <!-- 日期 -->
+  <picker
+    wx:elif="{{kind === 'date'}}"
+    mode="date"
+    value="{{dateValue}}"
+    start="1950-01-01"
+    end="{{today}}"
+    disabled="{{disabled}}"
+    bindchange="onDate"
+  >
+    <view class="fi-picker">
+      <text class="{{display ? 'fi-picker-text' : 'fi-ph'}}">{{display || '请选择日期'}}</text>
+      <text class="fi-arrow">›</text>
+    </view>
+  </picker>
+
+  <!-- 年月 -->
+  <picker
+    wx:elif="{{kind === 'month'}}"
+    mode="date"
+    fields="month"
+    value="{{monthValue}}"
+    start="1970-01"
+    end="{{today}}"
+    disabled="{{disabled}}"
+    bindchange="onMonth"
+  >
+    <view class="fi-picker">
+      <text class="{{display ? 'fi-picker-text' : 'fi-ph'}}">{{display || '请选择年月'}}</text>
+      <text class="fi-arrow">›</text>
+    </view>
+  </picker>
+
+  <!-- 单选 -->
+  <view wx:elif="{{kind === 'radio'}}" class="fi-radio-group">
+    <view
+      wx:for="{{field.options}}"
+      wx:key="*this"
+      class="fi-radio {{value === item ? 'is-on' : ''}}"
+      data-val="{{item}}"
+      bindtap="onRadio"
+    >
+      {{item}}
+    </view>
+  </view>
+
+  <!-- 是 / 否，选"是"可补充说明 -->
+  <view wx:elif="{{kind === 'yn'}}">
+    <view class="fi-radio-group">
+      <view
+        wx:for="{{field.options || ['是', '否']}}"
+        wx:key="*this"
+        class="fi-radio {{value === item ? 'is-on' : ''}}"
+        data-val="{{item}}"
+        bindtap="onYn"
+      >
+        {{item}}
+      </view>
+    </view>
+    <textarea
+      wx:if="{{field.allowNote && value === '是'}}"
+      class="fi-textarea fi-note"
+      value="{{noteValue}}"
+      maxlength="120"
+      placeholder="{{field.noteTip || '请补充说明'}}"
+      placeholder-class="fi-ph"
+      auto-height
+      bindinput="onNote"
+    />
+  </view>
+
+  <!-- 声明勾选 -->
+  <view wx:elif="{{kind === 'agree'}}">
+    <view class="fi-statement">{{field.statement}}</view>
+    <view class="fi-agree {{value ? 'is-on' : ''}}" bindtap="onAgree">
+      <view class="fi-agree-box">
+        <text wx:if="{{value}}" class="fi-agree-tick">✓</text>
+      </view>
+      <text class="fi-agree-text">我已阅读并同意上述声明，所填信息真实有效</text>
+    </view>
+  </view>
+
+  <!-- 照片 -->
+  <view wx:elif="{{kind === 'image'}}" class="fi-image">
+    <view wx:if="{{value}}" class="fi-image-box">
+      <image class="fi-image-prev" src="{{value}}" mode="aspectFill" />
+      <view class="fi-image-del" catchtap="onRemoveImage">×</view>
+    </view>
+    <view wx:else class="fi-image-add" bindtap="onChooseImage">
+      <text class="fi-image-plus">+</text>
+      <text class="fi-image-tip">{{uploading ? '上传中' : '拍照 / 相册'}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{error}}" class="fi-err">
+    <text class="fi-err-icon">!</text>
+    <text class="fi-err-text">{{error}}</text>
+  </view>
+  <view wx:elif="{{field.tip}}" class="fi-tip">{{field.tip}}</view>
+</view>

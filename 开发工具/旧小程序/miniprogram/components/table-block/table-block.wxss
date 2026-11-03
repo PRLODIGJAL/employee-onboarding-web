@@ -1,0 +1,111 @@
+.tb-hd {
+  display: flex;
+  align-items: baseline;
+  padding: 24rpx 0 16rpx;
+  border-bottom: 1rpx solid #F2F3F5;
+}
+
+.tb-title {
+  flex: 1;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #1F2329;
+}
+
+.tb-sub {
+  font-size: 22rpx;
+  color: #8A919F;
+}
+
+.tb-card {
+  margin-top: 20rpx;
+  padding: 4rpx 24rpx 20rpx;
+  background: #FAFAFB;
+  border-radius: 12rpx;
+}
+
+.tb-card-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18rpx 0 6rpx;
+}
+
+.tb-card-idx {
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #2563EB;
+}
+
+.tb-del {
+  font-size: 22rpx;
+  color: #E54545;
+}
+
+.tb-cell {
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #F0F1F3;
+}
+
+.tb-cell:last-child {
+  border-bottom: none;
+}
+
+.tb-label {
+  display: block;
+  font-size: 23rpx;
+  color: #8A919F;
+}
+
+.tb-input {
+  margin-top: 6rpx;
+  height: 52rpx;
+  font-size: 29rpx;
+  color: #1F2329;
+}
+
+.tb-picker {
+  margin-top: 6rpx;
+  height: 52rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tb-value {
+  font-size: 29rpx;
+  color: #1F2329;
+}
+
+.tb-ph {
+  font-size: 29rpx;
+  color: #B7BCC4;
+}
+
+.tb-arrow {
+  font-size: 30rpx;
+  color: #C0C4CC;
+}
+
+.tb-err {
+  display: block;
+  margin-top: 4rpx;
+  font-size: 21rpx;
+  color: #E54545;
+}
+
+.tb-cell.is-error .tb-input,
+.tb-cell.is-error .tb-value {
+  color: #E54545;
+}
+
+.tb-add {
+  margin-top: 20rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  text-align: center;
+  font-size: 26rpx;
+  color: #2563EB;
+  border: 1rpx dashed #B9CEF5;
+  border-radius: 10rpx;
+}

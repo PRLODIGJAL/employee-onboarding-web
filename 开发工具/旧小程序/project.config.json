@@ -1,0 +1,41 @@
+{
+  "description": "入职登记小程序（电子表单 + 数据校验 + Excel 导出）",
+  "miniprogramRoot": "miniprogram/",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "compileType": "miniprogram",
+  "appid": "touristappid",
+  "projectname": "onboarding-form",
+  "libVersion": "3.0.0",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "nodeModules": false,
+    "coverView": true,
+    "lazyloadPlaceholderEnable": false,
+    "preloadBackgroundData": false,
+    "autoAudits": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": true,
+    "useMultiFrameRuntime": true,
+    "showShadowRootInWxmlPanel": true,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true
+  },
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "入职登记表",
+          "pathName": "pages/form/form",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

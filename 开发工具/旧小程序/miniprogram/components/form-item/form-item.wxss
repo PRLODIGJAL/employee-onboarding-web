@@ -1,0 +1,268 @@
+.fi {
+  padding: 26rpx 0;
+  border-bottom: 1rpx solid #F2F3F5;
+}
+
+.fi:last-child {
+  border-bottom: none;
+}
+
+.fi.is-disabled {
+  opacity: 0.6;
+}
+
+/* 标题行 */
+.fi-hd {
+  display: flex;
+  align-items: center;
+}
+
+.fi-label {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #1F2329;
+}
+
+.fi-star {
+  margin-left: 6rpx;
+  font-size: 28rpx;
+  color: #E54545;
+}
+
+.fi-badge {
+  margin-left: 12rpx;
+  padding: 2rpx 10rpx;
+  font-size: 20rpx;
+  color: #2563EB;
+  background: #EAF1FE;
+  border-radius: 6rpx;
+}
+
+/* 输入控件 */
+.fi-input {
+  margin-top: 14rpx;
+  height: 64rpx;
+  font-size: 30rpx;
+  color: #1F2329;
+}
+
+.fi-textarea {
+  margin-top: 14rpx;
+  width: 100%;
+  min-height: 100rpx;
+  font-size: 30rpx;
+  line-height: 1.6;
+  color: #1F2329;
+}
+
+.fi-picker {
+  margin-top: 14rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fi-picker-text {
+  font-size: 30rpx;
+  color: #1F2329;
+}
+
+.fi-arrow {
+  font-size: 36rpx;
+  color: #C0C4CC;
+  line-height: 1;
+}
+
+.fi-ph {
+  font-size: 30rpx;
+  color: #B7BCC4;
+}
+
+/* 单选 */
+.fi-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 16rpx;
+}
+
+.fi-radio {
+  margin: 0 16rpx 12rpx 0;
+  padding: 12rpx 34rpx;
+  font-size: 28rpx;
+  color: #4E5969;
+  background: #F5F6F8;
+  border: 1rpx solid transparent;
+  border-radius: 8rpx;
+}
+
+.fi-radio.is-on {
+  color: #2563EB;
+  background: #EAF1FE;
+  border-color: #2563EB;
+}
+
+/* 提示与错误 */
+.fi-tip {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  line-height: 1.5;
+  color: #8A919F;
+}
+
+.fi-err {
+  margin-top: 10rpx;
+  display: flex;
+  align-items: flex-start;
+}
+
+.fi-err-icon {
+  flex-shrink: 0;
+  margin: 4rpx 8rpx 0 0;
+  width: 24rpx;
+  height: 24rpx;
+  line-height: 24rpx;
+  text-align: center;
+  font-size: 18rpx;
+  color: #FFFFFF;
+  background: #E54545;
+  border-radius: 50%;
+}
+
+.fi-err-text {
+  flex: 1;
+  font-size: 22rpx;
+  line-height: 1.5;
+  color: #E54545;
+}
+
+.fi.is-error .fi-picker-text,
+.fi.is-error .fi-input {
+  color: #E54545;
+}
+
+/* 单位后缀 */
+.fi-row {
+  display: flex;
+  align-items: center;
+}
+
+.fi-row .fi-input {
+  flex: 1;
+}
+
+.fi-suffix {
+  margin-left: 10rpx;
+  font-size: 26rpx;
+  color: #8A919F;
+}
+
+/* 是/否 的补充说明 */
+.fi-note {
+  margin-top: 12rpx;
+  padding: 16rpx 20rpx;
+  background: #FAFAFB;
+  border-radius: 8rpx;
+  font-size: 27rpx;
+}
+
+/* 声明 */
+.fi-statement {
+  margin-top: 14rpx;
+  padding: 20rpx;
+  font-size: 23rpx;
+  line-height: 1.75;
+  color: #6B7280;
+  background: #FAFAFB;
+  border-radius: 8rpx;
+}
+
+.fi-agree {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 20rpx;
+}
+
+.fi-agree-box {
+  flex-shrink: 0;
+  width: 34rpx;
+  height: 34rpx;
+  margin: 2rpx 14rpx 0 0;
+  border: 2rpx solid #C9CDD4;
+  border-radius: 6rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fi-agree.is-on .fi-agree-box {
+  background: #2563EB;
+  border-color: #2563EB;
+}
+
+.fi-agree-tick {
+  font-size: 22rpx;
+  line-height: 1;
+  color: #FFFFFF;
+}
+
+.fi-agree-text {
+  flex: 1;
+  font-size: 25rpx;
+  line-height: 1.6;
+  color: #4E5969;
+}
+
+/* 照片 */
+.fi-image {
+  margin-top: 16rpx;
+}
+
+.fi-image-add {
+  width: 180rpx;
+  height: 180rpx;
+  border: 2rpx dashed #D6DAE1;
+  border-radius: 10rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.fi-image-plus {
+  font-size: 44rpx;
+  line-height: 1;
+  color: #C0C4CC;
+}
+
+.fi-image-tip {
+  margin-top: 10rpx;
+  font-size: 21rpx;
+  color: #A3A9B3;
+}
+
+.fi-image-box {
+  position: relative;
+  width: 180rpx;
+  height: 180rpx;
+}
+
+.fi-image-prev {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 10rpx;
+}
+
+.fi-image-del {
+  position: absolute;
+  top: -10rpx;
+  right: -10rpx;
+  width: 36rpx;
+  height: 36rpx;
+  line-height: 32rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #FFFFFF;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 50%;
+}

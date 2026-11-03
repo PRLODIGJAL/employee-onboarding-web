@@ -1,0 +1,61 @@
+<view class="page">
+  <view class="hero">
+    <view class="hero-tag">新员工入职</view>
+    <view class="hero-title">{{title}}</view>
+    <view class="hero-desc">
+      在手机上填完即可，不用打印、不用手写、不用来回跑。填错的地方会当场提示，填完 HR 直接收到数据。
+    </view>
+  </view>
+
+  <view class="stats">
+    <view class="stat">
+      <text class="stat-num">{{stepCount}}</text>
+      <text class="stat-label">步填写</text>
+    </view>
+    <view class="stat-line"></view>
+    <view class="stat">
+      <text class="stat-num">{{fieldCount}}</text>
+      <text class="stat-label">个填写项</text>
+    </view>
+    <view class="stat-line"></view>
+    <view class="stat">
+      <text class="stat-num">{{requiredCount}}</text>
+      <text class="stat-label">项必填</text>
+    </view>
+  </view>
+
+  <view class="features">
+    <view class="feature">
+      <view class="feature-dot"></view>
+      <view class="feature-body">
+        <view class="feature-title">填错当场提示</view>
+        <view class="feature-desc">身份证少一位、手机号多一位、银行卡号对不上，都会立刻标红并说明错在哪</view>
+      </view>
+    </view>
+    <view class="feature">
+      <view class="feature-dot"></view>
+      <view class="feature-body">
+        <view class="feature-title">填一次，自动带出三项</view>
+        <view class="feature-desc">填完身份证号，出生日期、性别、籍贯自动填好，不用再手打一遍</view>
+      </view>
+    </view>
+    <view class="feature">
+      <view class="feature-dot"></view>
+      <view class="feature-body">
+        <view class="feature-title">地址点选，不打字</view>
+        <view class="feature-desc">省 / 市 / 区三级选择，不会出现同一条路两种写法</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="privacy">
+    你的身份证号、银行卡号等敏感信息仅用于办理入职、社保与工资发放，
+    不会用于其他用途。填写前请阅读
+    <text class="privacy-link" bindtap="goPrivacy">《用户隐私保护指引》</text>。
+  </view>
+
+  <view class="footer">
+    <button class="start-btn" bindtap="goForm">开始填写</button>
+    <view class="version" bindtap="goAdmin">表单版本 {{version}}</view>
+  </view>
+</view>

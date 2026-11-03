@@ -1,0 +1,84 @@
+<view class="tb">
+  <view class="tb-hd">
+    <text class="tb-title">{{block.title}}</text>
+    <text class="tb-sub">{{rows.length}} 段</text>
+  </view>
+
+  <view
+    wx:for="{{rows}}"
+    wx:for-item="row"
+    wx:for-index="ri"
+    wx:key="ri"
+    class="tb-card"
+  >
+    <view class="tb-card-hd">
+      <text class="tb-card-idx">第 {{ri + 1}} 段</text>
+      <text
+        wx:if="{{ri >= (block.requiredRows || 1)}}"
+        class="tb-del"
+        data-idx="{{ri}}"
+        catchtap="onRemove"
+      >删除</text>
+    </view>
+
+    <view
+      wx:for="{{block.columns}}"
+      wx:for-item="col"
+      wx:key="key"
+      class="tb-cell {{errors[block.key + '.' + ri + '.' + col.key] ? 'is-error' : ''}}"
+    >
+      <text class="tb-label">{{col.label}}</text>
+
+      <!-- 年月 -->
+      <picker
+        wx:if="{{col.type === 'month'}}"
+        mode="date"
+        fields="month"
+        value="{{row[col.key] || '2020-06'}}"
+        start="1970-01"
+        end="{{today}}"
+        data-idx="{{ri}}"
+        data-col="{{col.key}}"
+        bindchange="onCellMonth"
+      >
+        <view class="tb-picker">
+          <text class="{{row[col.key] ? 'tb-value' : 'tb-ph'}}">{{row[col.key] || '选择年月'}}</text>
+          <text class="tb-arrow">›</text>
+        </view>
+      </picker>
+
+      <!-- 下拉 -->
+      <picker
+        wx:elif="{{col.type === 'select'}}"
+        mode="selector"
+        range="{{col.options}}"
+        data-idx="{{ri}}"
+        data-col="{{col.key}}"
+        bindchange="onCellSelect"
+      >
+        <view class="tb-picker">
+          <text class="{{row[col.key] ? 'tb-value' : 'tb-ph'}}">{{row[col.key] || '请选择'}}</text>
+          <text class="tb-arrow">›</text>
+        </view>
+      </picker>
+
+      <!-- 文本 -->
+      <input
+        wx:else
+        class="tb-input"
+        value="{{row[col.key]}}"
+        placeholder="{{col.placeholder || '请输入'}}"
+        placeholder-class="tb-ph"
+        data-idx="{{ri}}"
+        data-col="{{col.key}}"
+        bindinput="onCellInput"
+      />
+
+      <text wx:if="{{errors[block.key + '.' + ri + '.' + col.key]}}" class="tb-err">
+        {{errors[block.key + '.' + ri + '.' + col.key]}}
+      </text>
+    </view>
+  </view>
+
+  <view class="tb-add" bindtap="onAdd">+ 再加一段</view>
+</view>
