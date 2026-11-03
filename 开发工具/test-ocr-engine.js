@@ -164,7 +164,7 @@ console.log('=== 号码提取与校验 ===');
 
   console.log('\n=== 照片不留痕 ===');
   {
-    const count = () => fs.readdirSync(os.tmpdir()).filter(f => f.indexOf('bmai-ocr-') === 0).length;
+    const count = () => fs.readdirSync(os.tmpdir()).filter(f => f.indexOf('onboard-ocr-') === 0).length;
     const before = count();
     if (eng.available && fs.existsSync(path.join(SAMPLES, 'clean.png'))) {
       await require(SRC).recognize('data:image/png;base64,' + fs.readFileSync(path.join(SAMPLES, 'clean.png')).toString('base64'));

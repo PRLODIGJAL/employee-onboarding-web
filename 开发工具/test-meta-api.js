@@ -77,7 +77,7 @@ async function j(method, url, body, token) {
     ok(noAuth.status === 401, '未登录被拒（' + noAuth.status + '）');
 
     console.log('\n【2】登录 + 提交一份表');
-    const login = await j('POST', '/api/login', { empNo: 'HR001', password: 'bmai2026' });
+    const login = await j('POST', '/api/login', { empNo: 'HR001', password: 'demo1234' });
     ok(login.data.ok === true, 'HR001 登录成功');
     const token = login.data.token;
 

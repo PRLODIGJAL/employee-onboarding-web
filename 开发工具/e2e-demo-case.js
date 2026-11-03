@@ -74,7 +74,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   demoBtn.click();
   await wait(30);
   doc.querySelector('#demoNo').value = 'HR001';
-  doc.querySelector('#demoPw').value = 'bmai2026';
+  doc.querySelector('#demoPw').value = 'demo1234';
   doc.querySelector('[data-sheet-act="demo-auth"]').click();
   await wait(80);
   const cases = doc.querySelectorAll('.demo-case');
@@ -115,7 +115,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   // 注意：选完案例 fillDemo 会 render()，导致 #side 重绘，旧 demoBtn 引用失效，要重新查
   doc.querySelector('#side [data-act="demo"]').click(); await wait(50);
   doc.querySelector('#demoNo').value = 'HR001';
-  doc.querySelector('#demoPw').value = 'bmai2026';
+  doc.querySelector('#demoPw').value = 'demo1234';
   doc.querySelector('[data-sheet-act="demo-auth"]').click(); await wait(50);
   doc.querySelectorAll('.demo-case')[1].click(); await wait(30);
   names.add(doc.querySelector('#f-realName [data-key="realName"]').value);
@@ -129,7 +129,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   // 案例3
   doc.querySelector('#side [data-act="demo"]').click(); await wait(50);
   doc.querySelector('#demoNo').value = 'HR001';
-  doc.querySelector('#demoPw').value = 'bmai2026';
+  doc.querySelector('#demoPw').value = 'demo1234';
   doc.querySelector('[data-sheet-act="demo-auth"]').click(); await wait(50);
   doc.querySelectorAll('.demo-case')[2].click(); await wait(30);
   names.add(doc.querySelector('#f-realName [data-key="realName"]').value);

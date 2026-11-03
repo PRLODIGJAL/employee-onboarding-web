@@ -5,7 +5,7 @@
  *   1. 确认提交那一屏有手写签名板
  *   2. 在画布上划两下，签名就存进了草稿（state.values.signData）
  *   3. 「重签」把签名清掉
- *   4. 导出的 Word 里，照片和签名都是真图片（word/media/bmai_photo.*），
+ *   4. 导出的 Word 里，照片和签名都是真图片（word/media/onboard_photo.*），
  *      而且没有照片 / 没有签名时也不会报错、不会留占位符
  *
  *   node test-sign-photo.js            只跑测试
@@ -37,7 +37,7 @@ function ok(name, cond, extra) {
   await page.locator('button', { hasText: '一键填案例' }).first().click().catch(() => {});
   await page.waitForTimeout(400);
   await page.fill('#demoNo', 'HR001');
-  await page.fill('#demoPw', 'bmai2026');
+  await page.fill('#demoPw', 'demo1234');
   await page.click('[data-sheet-act="demo-auth"]');
   await page.waitForTimeout(500);
   await page.click('[data-sheet-act="demo-pick"][data-key="zhang"]');
@@ -117,8 +117,8 @@ function ok(name, cond, extra) {
       name: vals.realName,
       hasPhotoData: !!(vals.photoData || '').length,
       hasSignData: !!(vals.signData || '').length,
-      photoMedia: s.indexOf('word/media/bmai_photo.jpeg') > -1,
-      signMedia: s.indexOf('word/media/bmai_sign.png') > -1,
+      photoMedia: s.indexOf('word/media/onboard_photo.jpeg') > -1,
+      signMedia: s.indexOf('word/media/onboard_sign.png') > -1,
       photoRel: s.indexOf('rId900') > -1,
       leftPlaceholder: (s.match(/\{\{(photo|sig1|sig2|date1|date2)\}\}/g) || []).length,
       drawings: (s.match(/<w:drawing>/g) || []).length,
@@ -145,7 +145,7 @@ function ok(name, cond, extra) {
     var s = new TextDecoder('utf-8').decode(bytes);
     return {
       ok: bytes.length > 1000,
-      noPhoto: s.indexOf('bmai_photo') < 0 && s.indexOf('bmai_sign') < 0,
+      noPhoto: s.indexOf('onboard_photo') < 0 && s.indexOf('onboard_sign') < 0,
       left: (s.match(/\{\{(photo|sig1|sig2)\}\}/g) || []).length,
       // 没照片时「照片」两个字还在，格子不能空着
       label: s.indexOf('<w:t>照片</w:t>') > -1,

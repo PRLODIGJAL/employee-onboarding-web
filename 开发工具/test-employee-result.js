@@ -86,7 +86,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   doc.querySelector('.tab[data-view="hr"]').click();
   await wait(200);
   doc.querySelector('#hrNo').value = 'HR001';
-  doc.querySelector('#hrPwd').value = 'bmai2026';
+  doc.querySelector('#hrPwd').value = 'demo1234';
   doc.querySelector('#hrLogin').dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
   await wait(300);
   const viewBtn = doc.querySelector('#viewHr [data-act="view"]');

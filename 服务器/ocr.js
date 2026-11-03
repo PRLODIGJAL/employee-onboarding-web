@@ -218,7 +218,7 @@ async function recognize(image) {
   }
 
   await acquire();
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'bmai-ocr-'));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'onboard-ocr-'));
   const name = 'in.' + parsed.ext;
   const file = path.join(dir, name);
 

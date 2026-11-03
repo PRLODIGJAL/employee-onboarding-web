@@ -98,7 +98,7 @@ function makeServerCopy() {
     env: Object.assign({}, process.env, {
       PORT: String(PORT), HOST: '127.0.0.1',
       AUTO_BACKUP_DELAY_MS: '200',   // 只为测试把 20 秒缩成 0.2 秒
-      HR_PASSWORD: 'bmai2026'
+      HR_PASSWORD: 'demo1234'
     }),
     stdio: 'pipe'
   });
@@ -117,7 +117,7 @@ function makeServerCopy() {
   console.log('\n【4】系统状态报的是「最新那份」，不是最早那份');
   const login = await fetch('http://127.0.0.1:' + PORT + '/api/login', {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ empNo: 'HR001', password: 'bmai2026' })
+    body: JSON.stringify({ empNo: 'HR001', password: 'demo1234' })
   }).then(r => r.json());
   ok(!!login.token, '能登录后台');
   const stats = await fetch('http://127.0.0.1:' + PORT + '/api/admin/stats', {

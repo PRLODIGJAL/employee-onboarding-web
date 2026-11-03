@@ -90,7 +90,7 @@ const isHidden = el => !el || el.hidden === true;
   ok(!!doc.querySelector('#hrNo'), '登录表单出来了');
 
   doc.querySelector('#hrNo').value = 'HR001';
-  doc.querySelector('#hrPwd').value = 'bmai2026';
+  doc.querySelector('#hrPwd').value = 'demo1234';
   doc.querySelector('#hrLogin').dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
   await wait(200);
   ok(!isHidden(doc.querySelector('#viewHr')), '登录成功进后台');

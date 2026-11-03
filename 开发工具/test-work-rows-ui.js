@@ -34,7 +34,7 @@ function ok(name, cond, extra) {
   await page.locator('button', { hasText: '一键填案例' }).first().click().catch(() => {});
   await page.waitForTimeout(400);
   await page.fill('#demoNo', 'HR001');
-  await page.fill('#demoPw', 'bmai2026');
+  await page.fill('#demoPw', 'demo1234');
   await page.click('[data-sheet-act="demo-auth"]');
   await page.waitForTimeout(500);
   await page.click('[data-sheet-act="demo-pick"][data-key="zhang"]');

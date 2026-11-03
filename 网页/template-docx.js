@@ -466,7 +466,7 @@
 
     function addImage(img, name) {
       if (mediaAdded[name]) return mediaAdded[name];
-      var file = 'media/bmai_' + name + '.' + img.ext;
+      var file = 'media/onboard_' + name + '.' + img.ext;
       var rid = 'rId' + (ridSeq++);
       mediaAdded[name] = rid;
       parts['word/' + file] = null;                   // 标记：下面按二进制写

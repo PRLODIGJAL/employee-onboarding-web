@@ -2956,7 +2956,7 @@ window.XLSXLite = (function () {
 
     function addImage(img, name) {
       if (mediaAdded[name]) return mediaAdded[name];
-      var file = 'media/bmai_' + name + '.' + img.ext;
+      var file = 'media/onboard_' + name + '.' + img.ext;
       var rid = 'rId' + (ridSeq++);
       mediaAdded[name] = rid;
       parts['word/' + file] = null;                   // 标记：下面按二进制写
@@ -6238,7 +6238,7 @@ module.exports = {
 
   // 演示账号。正式版绝对不能这样：账号密码要在云函数里查库、比对加盐哈希、
   // 只下发一个短期 token，前端不保存明文（见文档「HR 登录」一节）。
-  var HR_ACCOUNT = { no: 'HR001', pwd: 'bmai2026', name: '人事行政部' };
+  var HR_ACCOUNT = { no: 'HR001', pwd: 'demo1234', name: '人事行政部' };
   var HR_MAX_TRY = 3;
   var HR_LOCK_MS = 30000;
 
@@ -6367,7 +6367,7 @@ module.exports = {
     openSheet(
       '<div class="sheet-head"><b>填写口令</b><button class="x" data-close>×</button></div>'
       + '<p class="sheet-desc">HR 发链接的时候会一起给一个口令，填进来才能提交。</p>'
-      + '<input class="field-input" id="codeInput" placeholder="例如 bmai2026" autocomplete="off" enterkeyhint="done">'
+      + '<input class="field-input" id="codeInput" placeholder="例如 demo1234" autocomplete="off" enterkeyhint="done">'
       + '<div class="sheet-foot"><button class="btn ghost" data-sheet-act="code-cancel">取消</button>'
       + '<button class="btn primary" data-sheet-act="code-ok">确定</button></div>',
       function () { pendingCodeCb = null; }
@@ -7829,7 +7829,7 @@ module.exports = {
   /* 一键填案例：先验证管理员身份，再挑一个案例。
      密码和 HR 后台用的是同一个账号：
        - 连了服务器 → 走 /api/login 由服务器校验，错一次都算数
-       - 没连服务器（本机演示）→ 比对页面里的演示账号 HR001 / bmai2026
+       - 没连服务器（本机演示）→ 比对页面里的演示账号 HR001 / demo1234
      这样普通人随手点一下填不进东西，免得把演示数据混进真档案。 */
 
   function askAdminForDemo() {
@@ -7875,7 +7875,7 @@ module.exports = {
       if (no === HR_ACCOUNT.no && pw === HR_ACCOUNT.pwd) {
         openDemoPicker();
       } else {
-        toast('工号或密码不对（本机演示账号 HR001 / bmai2026）', 'bad');
+        toast('工号或密码不对（本机演示账号 HR001 / demo1234）', 'bad');
       }
     }
   }
@@ -8631,7 +8631,7 @@ module.exports = {
       + (online
         ? '<b>账号由服务器校验</b><span>忘记密码让管理员在服务器上执行 '
           + '<code>node server.js --password 新密码</code></span>'
-        : '<b>演示账号</b>　工号 <code>HR001</code>　密码 <code>bmai2026</code>'
+        : '<b>演示账号</b>　工号 <code>HR001</code>　密码 <code>demo1234</code>'
           + '<span>当前没连服务器，所以校验写在前端。部署到服务器后会自动改成服务器校验。</span>')
       + '</div>';
 
@@ -9195,7 +9195,7 @@ module.exports = {
   function openPasswordSheet() {
     openSheet(
       '<div class="sheet-head"><b>改 HR 密码</b><button class="x" data-close>×</button></div>'
-      + '<p class="sheet-desc">默认密码 <b>bmai2026</b> 必须改掉，否则谁看到这段代码都能进后台。'
+      + '<p class="sheet-desc">默认密码 <b>demo1234</b> 必须改掉，否则谁看到这段代码都能进后台。'
       + '至少 8 位；改完所有已登录的地方会被踢下线。</p>'
       + '<input class="field-input" id="pwOld" type="password" placeholder="原密码" autocomplete="current-password">'
       + '<input class="field-input" id="pwNew" type="password" placeholder="新密码（至少 8 位）" autocomplete="new-password">'

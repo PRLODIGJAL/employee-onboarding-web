@@ -37,11 +37,11 @@ function render(qr, scale, quiet) {
 }
 
 const cases = [
-  'https://onboard.bmai.com/',
-  'https://onboard.bmai.com/fill?src=zhaopin',
+  'https://onboard.example.com/',
+  'https://onboard.example.com/fill?src=zhaopin',
   'http://192.168.13.101:8080/',
-  'https://onboard.bmai.com/fill?utm_source=zhaopin&utm_medium=poster&d=2026',
-  '入职登记 https://onboard.bmai.com/fill',
+  'https://onboard.example.com/fill?utm_source=zhaopin&utm_medium=poster&d=2026',
+  '入职登记 https://onboard.example.com/fill',
   'https://a.cn/' + 'x'.repeat(180)
 ];
 

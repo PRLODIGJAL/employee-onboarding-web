@@ -74,7 +74,7 @@ const bufHas = (buf, s) => Buffer.from(buf).includes(Buffer.from(s, 'utf8'));
   doc.querySelector('#side [data-act="demo"]').click();
   await wait(50);
   doc.querySelector('#demoNo').value = 'HR001';
-  doc.querySelector('#demoPw').value = 'bmai2026';
+  doc.querySelector('#demoPw').value = 'demo1234';
   doc.querySelector('[data-sheet-act="demo-auth"]').click();
   await wait(60);
   doc.querySelectorAll('.demo-case')[1].click();      // 案例 2 · 应届生

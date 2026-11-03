@@ -34,17 +34,17 @@ EC = {
 # 版本一律写死：python-qrcode 的自动选版有时会保守地跳大，不利于逐模块比对；
 # 这里用的版本都是"刚好装得下"的最小版本，等于同时校验了容量表。
 CASES = [
-    ("https://bmai.example.com/", "M", 0, 2),
-    ("https://bmai.example.com/", "M", 3, 2),
-    ("https://bmai.example.com/", "M", 7, 2),
+    ("https://onboard.example.com/", "M", 0, 2),
+    ("https://onboard.example.com/", "M", 3, 2),
+    ("https://onboard.example.com/", "M", 7, 2),
     ("http://192.168.13.101:8080/fill", "M", 2, 3),
-    ("https://onboard.bmai.com/hr/fill?src=zhaopin", "M", 5, 4),
-    ("https://onboard.bmai.com/fill?from=gongzhonghao&id=2026", "M", 1, 4),
-    ("https://onboard.bmai.com/fill", "L", 6, 2),
+    ("https://onboard.example.com/hr/fill?src=zhaopin", "M", 5, 4),
+    ("https://onboard.example.com/fill?from=gongzhonghao&id=2026", "M", 1, 4),
+    ("https://onboard.example.com/fill", "L", 6, 2),
     ("A" * 120, "M", 4, 7),
-    ("https://onboard.bmai.com/fill?utm_source=zhaopin&utm_medium=poster&d=2026", "M", 0, 5),
+    ("https://onboard.example.com/fill?utm_source=zhaopin&utm_medium=poster&d=2026", "M", 0, 5),
     ("B" * 200, "L", 2, 9),
-    ("入职登记：" + "https://onboard.bmai.com/fill", "M", 3, 4),
+    ("入职登记：" + "https://onboard.example.com/fill", "M", 3, 4),
 ]
 
 

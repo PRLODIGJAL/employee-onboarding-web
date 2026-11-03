@@ -111,7 +111,7 @@ function tableRow(doc, tk, ri) {
     doc.querySelector('#side [data-act="demo"]').click();
     await wait(60);
     doc.querySelector('#demoNo').value = 'HR001';
-    doc.querySelector('#demoPw').value = 'bmai2026';
+    doc.querySelector('#demoPw').value = 'demo1234';
     doc.querySelector('[data-sheet-act="demo-auth"]').click();
     await wait(80);
     const cases = doc.querySelectorAll('.demo-case');

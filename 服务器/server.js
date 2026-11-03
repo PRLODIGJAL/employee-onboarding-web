@@ -18,7 +18,7 @@
  *   HR_PASSWORD=你的密码 node server.js
  *   PUBLIC_URL=https://xxx.com node server.js   网站对外的正式地址（生成二维码用）
  *   TRUST_PROXY=1 node server.js   前面挂了 Caddy / nginx 反向代理时加这个
- *   SUBMIT_CODE=bmai2026 node server.js         要求员工输入填写口令（可选，防乱填）
+ *   SUBMIT_CODE=demo1234 node server.js         要求员工输入填写口令（可选，防乱填）
  *
  * 改 HR 密码：
  *   node server.js --password 新密码      （在服务器上执行）
@@ -141,8 +141,8 @@ let HR = null;
 if (fs.existsSync(HR_FILE)) {
   HR = JSON.parse(fs.readFileSync(HR_FILE, 'utf8'));
 } else {
-  HR = saveHr(process.env.HR_EMP_NO || 'HR001', process.env.HR_PASSWORD || 'bmai2026');
-  console.log('⚠️  首次启动，已创建 HR 账号：' + HR.empNo + ' / ' + (process.env.HR_PASSWORD || 'bmai2026'));
+  HR = saveHr(process.env.HR_EMP_NO || 'HR001', process.env.HR_PASSWORD || 'demo1234');
+  console.log('⚠️  首次启动，已创建 HR 账号：' + HR.empNo + ' / ' + (process.env.HR_PASSWORD || 'demo1234'));
   console.log('   正式使用前请改密码：node server.js --password 你的新密码');
 }
 

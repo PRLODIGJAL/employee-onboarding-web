@@ -63,7 +63,7 @@ const ok = (cond, msg) => { if (cond) { pass++; console.log('  ✓ ' + msg); } e
   doc.querySelector('[data-act="demo"]').click();
   await wait(50);
   doc.querySelector('#demoNo').value = 'HR001';
-  doc.querySelector('#demoPw').value = 'bmai2026';
+  doc.querySelector('#demoPw').value = 'demo1234';
   doc.querySelector('[data-sheet-act="demo-auth"]').click();
   await wait(60);
   doc.querySelectorAll('.demo-case')[0].click();

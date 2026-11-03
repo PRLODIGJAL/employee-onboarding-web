@@ -71,7 +71,7 @@ function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
     (($('.login-err') || {}).textContent || '').trim());
 
   $('#hrNo').value = 'HR001';
-  $('#hrPwd').value = 'bmai2026';
+  $('#hrPwd').value = 'demo1234';
   $('#hrLogin').dispatchEvent(new w.Event('submit', { bubbles: true, cancelable: true }));
   await wait(1200);
 
